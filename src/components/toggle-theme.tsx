@@ -67,10 +67,12 @@ export default function ToggleTheme() {
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setMode(event.target.checked ? 'dark' : 'light');
 	};
+
+    
 	return (
 		<>
 			<MaterialUISwitch
-				value={mode === 'dark'}
+				checked={mode === 'dark'}
 				onChange={handleChange}></MaterialUISwitch>
 			{mode}
 		</>
