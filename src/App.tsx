@@ -1,9 +1,15 @@
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import {
+	ThemeProvider,
+	createTheme,
+	useColorScheme,
+} from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import ToggleTheme from './components/toggle-theme';
+import ToggleTheme from './components/ToggleTheme';
 import { useEffect, useState } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from './configs/firebase.config';
+import Layout from './components/Layout';
+import { ThemeWrapperProvider } from './contexts/ThemeContext';
 
 const darkTheme = createTheme({
 	colorSchemes: {
@@ -13,6 +19,7 @@ const darkTheme = createTheme({
 
 function App() {
 	const [data, setData] = useState<{ name: string }[]>([]);
+	const { mode, setMode } = useColorScheme();
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -22,21 +29,15 @@ function App() {
 			setData(dataList as any);
 		};
 		console.log('Run here');
-		fetchData();
+		// fetchData();
 	}, []);
 
 	return (
-		<ThemeProvider theme={darkTheme}>
+		<ThemeWrapperProvider>
 			<CssBaseline />
-			<main>This app is using the dark mode</main>
-			<ToggleTheme></ToggleTheme>
 
-			<ul>
-				{data.map((item, index) => (
-					<li key={index}>{item.name}</li>
-				))}
-			</ul>
-		</ThemeProvider>
+			<Layout></Layout>
+		</ThemeWrapperProvider>
 	);
 }
 

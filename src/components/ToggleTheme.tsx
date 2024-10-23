@@ -1,6 +1,9 @@
 import * as React from 'react';
 import { styled, useColorScheme, useTheme } from '@mui/material/styles';
 import Switch, { SwitchProps } from '@mui/material/Switch';
+import { useContext } from 'react';
+import { ThemeWrapperContext } from '../contexts/ThemeContext';
+import { IThemeContext, IThemeMode } from '../contexts/themes';
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 	width: 62,
@@ -58,23 +61,30 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 	},
 }));
 
-export default function ToggleTheme() {
-	const { mode, setMode } = useColorScheme();
-	if (!mode) {
-		return null;
-	}
+interface ToggleThemeProps {
+	mode: 'dark' | 'light';
+	onChangeMode: void;
+}
+
+const ToggleTheme = () => {
+	const { themeMode, switchThemeMode } = useContext(
+		ThemeWrapperContext,
+	) as IThemeContext;
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setMode(event.target.checked ? 'dark' : 'light');
+		switchThemeMode(
+			event.target.checked ? IThemeMode.DARK : IThemeMode.LIGHT,
+		);
 	};
 
-    
 	return (
 		<>
 			<MaterialUISwitch
-				checked={mode === 'dark'}
+				checked={themeMode === 'dark'}
 				onChange={handleChange}></MaterialUISwitch>
-			{mode}
+			{themeMode}
 		</>
 	);
-}
+};
+
+export default ToggleTheme;
