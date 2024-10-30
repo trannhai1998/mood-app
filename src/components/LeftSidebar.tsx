@@ -6,13 +6,22 @@ import {
 	ListItemText,
 	ListItemIcon,
 	ListItemButton,
+	Divider,
+	Stack,
 } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
-import PeopleIcon from '@mui/icons-material/People';
 import GroupsIcon from '@mui/icons-material/Groups';
 import { IconWrapper } from './IconWrapper';
+import RecommendFriends from './RecommendFriends';
+import { useNavigate } from 'react-router-dom';
 
 const Sidebar: React.FC = () => {
+	const navigate = useNavigate();
+
+	const handleRedirect = (url) => {
+		navigate(url);
+	};
+
 	return (
 		<Box
 			sx={[
@@ -38,18 +47,19 @@ const Sidebar: React.FC = () => {
 					// }),
 				}),
 			]}>
-			<List>
-				<ListItem>
-					<ListItemButton>
-						<ListItemIcon>
-							<IconWrapper>
-								<HomeIcon />
-							</IconWrapper>
-						</ListItemIcon>
-						<ListItemText primary="Home" />
-					</ListItemButton>
-				</ListItem>
-				<ListItem>
+			<Stack spacing={2}>
+				<List>
+					<ListItem>
+						<ListItemButton onClick={() => handleRedirect('/feed')}>
+							<ListItemIcon>
+								<IconWrapper>
+									<HomeIcon />
+								</IconWrapper>
+							</ListItemIcon>
+							<ListItemText primary="Home" />
+						</ListItemButton>
+					</ListItem>
+					{/* <ListItem>
 					<ListItemButton>
 						<ListItemIcon>
 							<IconWrapper>
@@ -58,29 +68,31 @@ const Sidebar: React.FC = () => {
 						</ListItemIcon>
 						<ListItemText primary="Friends" />
 					</ListItemButton>
-				</ListItem>
-				<ListItem>
-					<ListItemButton>
-						<ListItemIcon>
-							<IconWrapper>
-								<GroupsIcon />
-							</IconWrapper>
-						</ListItemIcon>
-						<ListItemText primary="Analytics" />
-					</ListItemButton>
-				</ListItem>
-				<ListItem>
-					<ListItemButton>
-						<ListItemIcon>
-							<IconWrapper>
-								<GroupsIcon />
-							</IconWrapper>
-						</ListItemIcon>
-						<ListItemText primary="Trophy" />
-					</ListItemButton>
-				</ListItem>
-				{/* Thêm các mục khác ở đây */}
-			</List>
+				</ListItem> */}
+					<ListItem>
+						<ListItemButton>
+							<ListItemIcon>
+								<IconWrapper>
+									<GroupsIcon />
+								</IconWrapper>
+							</ListItemIcon>
+							<ListItemText primary="Analytics" />
+						</ListItemButton>
+					</ListItem>
+					<ListItem>
+						<ListItemButton>
+							<ListItemIcon>
+								<IconWrapper>
+									<GroupsIcon />
+								</IconWrapper>
+							</ListItemIcon>
+							<ListItemText primary="Trophy" />
+						</ListItemButton>
+					</ListItem>
+				</List>
+
+				<RecommendFriends></RecommendFriends>
+			</Stack>
 		</Box>
 	);
 };

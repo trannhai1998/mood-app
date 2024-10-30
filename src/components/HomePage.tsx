@@ -20,7 +20,7 @@ const HomePage = () => {
 					<Outlet /> {/* Đây sẽ render các route con */}
 				</Box>
 
-				<RightBar />
+				{/* <RightBar /> */}
 			</Box>
 		</PostProvider>
 	);
