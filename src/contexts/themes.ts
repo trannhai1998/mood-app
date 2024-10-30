@@ -1,3 +1,4 @@
+import { green, yellow } from '@mui/material/colors';
 import { createTheme, ThemeOptions } from '@mui/material/styles';
 
 export enum IThemeMode {
@@ -14,14 +15,16 @@ const appDarkTheme = createTheme({
 	palette: {
 		mode: 'dark', // Dark mode
 		primary: {
-			main: '#90caf9',
+			main: '#fabd55',
 		},
 		secondary: {
 			main: '#f48fb1',
+
 		},
 		background: {
 			default: '#121212',
 			paper: '#1e1e1e',
+            
 		},
 	},
 	typography: {
@@ -36,13 +39,13 @@ const appLightTheme = createTheme({
 	palette: {
 		mode: 'light', // Light mode
 		primary: {
-			main: '#1976d2',
+			main: green[600],
 		},
 		secondary: {
 			main: '#f50057',
 		},
 		background: {
-			default: '#f5f5f5',
+			default: '#F1F2F5',
 			paper: '#ffffff',
 		},
 	},

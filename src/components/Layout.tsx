@@ -1,13 +1,12 @@
 import React from 'react';
 import { Box, Container, CssBaseline } from '@mui/material';
 import Header from './Header';
-import LeftSidebar from './LeftSidebar';
-import Feed from './Feed';
-import RightBar from './RightSidebar';
 
-interface LayoutProps {}
+interface LayoutProps {
+	children: React.ReactNode;
+}
 
-const Layout = () => {
+const Layout = ({ children }: LayoutProps) => {
 	return (
 		<Container
 			maxWidth="xl"
@@ -16,23 +15,15 @@ const Layout = () => {
 				flexDirection: 'column',
 				paddingTop: '54px',
 				height: '100vh',
+                paddingX: {
+                    xs: '0px'
+                }
 			}}>
 			{/* Header */}
 			<Header />
 
 			{/* Main Content */}
-			<Box
-				sx={{
-					display: 'flex',
-					width: '100%',
-					flexGrow: 1,
-				}}>
-				<LeftSidebar />
-
-				<Feed />
-
-				<RightBar />
-			</Box>
+			{children}
 		</Container>
 	);
 };

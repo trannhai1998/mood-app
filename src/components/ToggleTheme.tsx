@@ -31,7 +31,7 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 		},
 	},
 	'& .MuiSwitch-thumb': {
-		backgroundColor: '#001e3c',
+		backgroundColor: '#fabd55',
 		width: 32,
 		height: 32,
 		'&::before': {
@@ -53,7 +53,7 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 	},
 	'& .MuiSwitch-track': {
 		opacity: 1,
-		backgroundColor: '#aab4be',
+		backgroundColor: '#fff',
 		borderRadius: 20 / 2,
 		...theme.applyStyles('dark', {
 			backgroundColor: '#8796A5',
@@ -82,7 +82,6 @@ const ToggleTheme = () => {
 			<MaterialUISwitch
 				checked={themeMode === 'dark'}
 				onChange={handleChange}></MaterialUISwitch>
-			{themeMode}
 		</>
 	);
 };
