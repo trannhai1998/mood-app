@@ -59,7 +59,7 @@ export const FriendUserProvider = ({ children }) => {
 					id: doc.id,
 					...doc.data(),
 				}))
-				.filter((e) => e.id && e.displayName);
+				.filter((e) => e.id && e.displayName && e.id !== user.uid);
 			console.log(friendsInfo);
 			return setUserFriends(friendsInfo);
 		} catch (error) {

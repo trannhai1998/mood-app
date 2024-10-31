@@ -56,10 +56,12 @@ const RecommendFriends = () => {
 		);
 		const querySnapshot = await getDocs(q);
 
-		const listUser = querySnapshot.docs.map((doc) => ({
-			id: doc.id,
-			...doc.data(),
-		}));
+		const listUser = querySnapshot.docs
+			.map((doc) => ({
+				id: doc.id,
+				...doc.data(),
+			}))
+			.filter((e) => e.id !== user.uid);
 		setListUser(listUser);
 	};
 

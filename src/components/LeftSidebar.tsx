@@ -14,6 +14,7 @@ import GroupsIcon from '@mui/icons-material/Groups';
 import { IconWrapper } from './IconWrapper';
 import RecommendFriends from './RecommendFriends';
 import { useNavigate } from 'react-router-dom';
+import PollIcon from '@mui/icons-material/Poll';
 
 const Sidebar: React.FC = () => {
 	const navigate = useNavigate();
@@ -73,7 +74,11 @@ const Sidebar: React.FC = () => {
 						<ListItemButton>
 							<ListItemIcon>
 								<IconWrapper>
-									<GroupsIcon />
+									<GroupsIcon
+										sx={{
+											fontSize: '28px',
+										}}
+									/>
 								</IconWrapper>
 							</ListItemIcon>
 							<ListItemText primary="Analytics" />
@@ -83,7 +88,7 @@ const Sidebar: React.FC = () => {
 						<ListItemButton>
 							<ListItemIcon>
 								<IconWrapper>
-									<GroupsIcon />
+									<PollIcon />
 								</IconWrapper>
 							</ListItemIcon>
 							<ListItemText primary="Trophy" />
