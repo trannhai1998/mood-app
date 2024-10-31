@@ -13,7 +13,6 @@ const Login = () => {
 	useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth, (user) => {
 			if (user) {
-				console.log(user);
 				navigate('/feed');
 			}
 		});
@@ -38,10 +37,8 @@ const Login = () => {
 					} else {
 						setError('Email or password is in valid!');
 					}
-					console.log(user);
 				} catch (error) {
 					setError('Email or password is in valid!');
-					console.log(error);
 				} finally {
 					setLoading(false);
 				}

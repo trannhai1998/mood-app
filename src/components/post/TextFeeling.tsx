@@ -28,6 +28,7 @@ const TextFeeling = ({
 			<Typography
 				display={'inline'}
 				color="primary"
+                fontWeight={600}
 				sx={{
 					cursor: 'pointer',
 					':hover': {

@@ -7,7 +7,6 @@ export const Emoji = ({ label, path, isActive }) => {
 
 	const handleMouseEnter = () => {
 		if (videoRef) {
-			console.log(videoRef);
 			// @ts-ignore: Unreachable code error
 			videoRef.current.play();
 			// @ts-ignore: Unreachable code error

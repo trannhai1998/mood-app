@@ -20,7 +20,6 @@ const EditorPost = ({
 	const log = () => {
 		if (!!editorRef && !!editorRef.current) {
 			// @ts-ignore: Unreachable code error
-			console.log(editorRef.current.getContent());
 		}
 	};
 

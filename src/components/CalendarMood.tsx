@@ -78,7 +78,6 @@ export default function DateCalendarServerRequest() {
 			signal: controller.signal,
 		})
 			.then(({ daysToHighlight }) => {
-				console.log(daysToHighlight);
 				setHighlightedDays(daysToHighlight);
 				setIsLoading(false);
 			})

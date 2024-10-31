@@ -54,10 +54,12 @@ export const FriendUserProvider = ({ children }) => {
 			);
 			const friendsDocs = await Promise.all(friendsInfoPromises);
 
-			const friendsInfo = friendsDocs.map((doc) => ({
-				id: doc.id,
-				...doc.data(),
-			}));
+			const friendsInfo = friendsDocs
+				.map((doc) => ({
+					id: doc.id,
+					...doc.data(),
+				}))
+				.filter((e) => e.id && e.displayName);
 			console.log(friendsInfo);
 			return setUserFriends(friendsInfo);
 		} catch (error) {

@@ -42,12 +42,10 @@ export const PostProvider = ({ children }) => {
 				limit(limitNumb),
 			]);
 			const currentUser = await fetchUserData(user.uid);
-			console.log(currentUser);
 
 			let postsFriendUser: any[] = [];
 			if (currentUser?.friends?.length) {
 				const postsByUserPromises = currentUser.friends?.map((e) => {
-					console.log(e);
 					return fetchPostByUser(e, [
 						orderBy('createdDate', 'desc'),
 						limit(2),
@@ -57,7 +55,6 @@ export const PostProvider = ({ children }) => {
 					postsByUserPromises,
 				);
 				postsFriendUser = _.flatMap(PostsListByFriends);
-				console.log(PostsListByFriends);
 			}
 
 			const combinePostList = _.orderBy(
