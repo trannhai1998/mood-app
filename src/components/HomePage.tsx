@@ -16,11 +16,13 @@ const HomePage = () => {
 				}}>
 				<LeftSidebar />
 
-                <Box sx={{ flexGrow: 1 }}> {/* Container cho phần nội dung chính */}
+				<Box sx={{ flexGrow: 1 }}>
+					{' '}
+					{/* Container cho phần nội dung chính */}
 					<Outlet /> {/* Đây sẽ render các route con */}
 				</Box>
 
-				{/* <RightBar /> */}
+				<RightBar />
 			</Box>
 		</PostProvider>
 	);

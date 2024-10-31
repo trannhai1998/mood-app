@@ -26,7 +26,7 @@ const Sidebar: React.FC = () => {
 		<Box
 			sx={[
 				(theme) => ({
-					width: '280px',
+					width: '300px',
 					bgcolor: 'background.paper',
 					position: 'sticky',
 					top: '54px',

@@ -25,72 +25,33 @@ import { db } from 'configs/firebase.config';
 import { useNavigate } from 'react-router-dom';
 import { concat } from 'lodash';
 import { handleFriendRequest } from 'utils/fuctions';
+import MessageIcon from '@mui/icons-material/Message';
 import { IFriendUserContext, useFriendUser } from 'contexts/FriendUserContext';
 
-const RecommendFriends = () => {
-	const { user } = useAuth() as { user: User };
+const ListFriends = () => {
 	const navigate = useNavigate();
-	const [listUser, setListUser] = useState<any[] | null>(null);
-	const [listUserIdsLoading, setListUserIdsLoading] = useState<string[]>([]);
-	const { fetchUserFriends } = useFriendUser() as IFriendUserContext;
-
-	useEffect(() => {
-		if (!user) return;
-		fetchListUserRecommend();
-	}, [user]);
-
-	if (!user) {
-		return null;
-	}
-
-	const fetchListUserRecommend = async () => {
-		if (!user) {
-			return;
-		}
-
-		const currentUser = (await getDoc(doc(db, 'users', user.uid))).data();
-		const usersRef = collection(db, 'users');
-		const q = query(
-			usersRef,
-			where('id', 'not-in', currentUser?.friends || ['empty']),
-			limit(5),
-		);
-		const querySnapshot = await getDocs(q);
-
-		const listUser = querySnapshot.docs.map((doc) => ({
-			id: doc.id,
-			...doc.data(),
-		}));
-		setListUser(listUser);
-	};
-
+	const { user } = useAuth() as { user: User };
+	const { userFriends, fetchUserFriends } =
+		useFriendUser() as IFriendUserContext;
 	const handleRedirectDetailUser = (userId) => {
 		navigate(`/feed/user/${userId}`);
 	};
 
-	const onAddFriend = async (id: string) => {
-		setListUserIdsLoading(concat(listUserIdsLoading, id));
-
-		await handleFriendRequest(user.uid, id, true);
-
-		setListUserIdsLoading(listUserIdsLoading.filter((e) => e !== id));
-		if (listUser) {
-			setListUser(listUser?.filter((e) => e.id !== id));
-		}
+	useEffect(() => {
 		fetchUserFriends();
-	};
+	}, []);
 
 	return (
 		<Stack spacing={2}>
 			<Divider sx={{ marginTop: 2 }}>
 				<Typography className="font-cute" color="primary" fontSize={18}>
-					Suggestion Friends
+					Friends
 				</Typography>
 			</Divider>
 
 			<Stack spacing={2} px={2}>
-				{listUser?.length
-					? listUser.map((e) => (
+				{userFriends?.length
+					? userFriends.map((e) => (
 							<Box
 								className="animate__animated animate__fadeIn"
 								sx={{
@@ -112,18 +73,13 @@ const RecommendFriends = () => {
 								</Typography>
 
 								<Tooltip
-									title="Send a message"
+									title="Add Friend"
 									sx={{ marginLeft: 'auto' }}>
-									<IconButton
-										color="primary"
-										onClick={() => onAddFriend(e.id)}
-										disabled={listUserIdsLoading?.includes(
-											e?.id,
-										)}>
-										<PersonAddIcon
+									<IconButton color="primary">
+										<MessageIcon
 											sx={{
 												fontSize: '24px',
-											}}></PersonAddIcon>
+											}}></MessageIcon>
 									</IconButton>
 								</Tooltip>
 							</Box>
@@ -134,4 +90,4 @@ const RecommendFriends = () => {
 	);
 };
 
-export default RecommendFriends;
+export default ListFriends;

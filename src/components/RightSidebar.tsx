@@ -1,12 +1,14 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
+import CalendarMood from './CalendarMood';
+import ListFriends from './ListFriends';
 
 const RightBar: React.FC = () => {
 	return (
 		<Box
 			sx={[
 				(theme) => ({
-					width: '280px',
+					width: '300px',
 					bgcolor: 'background.paper',
 					position: 'sticky', // Sticky position để sidebar phải luôn cố định
 					top: '54px',
@@ -14,9 +16,10 @@ const RightBar: React.FC = () => {
 					background: 'transparent',
 					flexShrink: 0,
 					display: {
-                        xs: 'none',
-                        lg: 'block'
+						xs: 'none',
+						lg: 'block',
 					},
+					py: 2,
 					// borderRadius: '15px',
 					// ...theme.applyStyles('dark', {
 					// 	backgroundColor: '#fabd551c',
@@ -26,7 +29,9 @@ const RightBar: React.FC = () => {
 					// }),
 				}),
 			]}>
-			<Typography variant="h6">Rightbar</Typography>
+			<CalendarMood></CalendarMood>
+
+			<ListFriends></ListFriends>
 		</Box>
 	);
 };

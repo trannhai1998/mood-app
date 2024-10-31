@@ -14,7 +14,9 @@ import router from './components/Routes';
 import { RouterProvider } from 'react-router-dom';
 import { AuthProvider } from './components/auth/AuthProvider';
 import './styles/common.css';
-import './styles/variables.css'
+import './styles/variables.css';
+import { FriendUserProvider } from 'contexts/FriendUserContext';
+import 'animate.css';
 
 const darkTheme = createTheme({
 	colorSchemes: {
@@ -40,7 +42,9 @@ function App() {
 		<ThemeWrapperProvider>
 			<CssBaseline />
 			<AuthProvider>
-				<RouterProvider router={router}></RouterProvider>
+				<FriendUserProvider>
+					<RouterProvider router={router}></RouterProvider>
+				</FriendUserProvider>
 			</AuthProvider>
 		</ThemeWrapperProvider>
 	);

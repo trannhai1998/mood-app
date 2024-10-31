@@ -24,6 +24,7 @@ import { UserAvatar } from './UserAvatar';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { useAuth } from './auth/AuthProvider';
 import { User } from 'firebase/auth';
+import { IFriendUserContext, useFriendUser } from 'contexts/FriendUserContext';
 
 const UserDetail = () => {
 	const { userId } = useParams(); // Nhận userId từ URL
@@ -32,6 +33,7 @@ const UserDetail = () => {
 	const [loading, setLoading] = useState(true);
 	const [userDetail, setUserDetail] = useState<any>(null);
 	const [loadingUser, setLoadingUser] = useState(true);
+	const { userFriends } = useFriendUser() as IFriendUserContext;
 
 	const fetchUserPosts = async () => {
 		setLoading(true);
@@ -106,10 +108,10 @@ const UserDetail = () => {
 				) : (
 					<>
 						<UserAvatar
-							displayName={userDetail.displayName}
-							path={userDetail.photoURL}></UserAvatar>
+							displayName={userDetail?.displayName || ''}
+							path={userDetail?.photoURL || ''}></UserAvatar>
 						<Typography fontSize={'20px'} fontWeight={700}>
-							{userDetail.displayName}
+							{userDetail?.displayName}
 						</Typography>
 
 						<Box
@@ -118,7 +120,8 @@ const UserDetail = () => {
 							sx={{
 								marginLeft: 'auto !important',
 							}}>
-							{currentUser?.uid !== userId ? (
+							{currentUser?.uid !== userId &&
+							!userFriends?.includes(userId) ? (
 								<Tooltip title="Add Friend">
 									<IconButton color="primary">
 										<PersonAddIcon
