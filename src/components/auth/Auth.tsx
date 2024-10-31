@@ -66,8 +66,11 @@ const Auth = ({
 		event.preventDefault();
 	};
 	return (
-		<form onSubmit={(event) => handleSubmit(event, email, password)}>
+		<form onSubmit={(event) => handleSubmit(event, email, password)}
+            className='animate__animated animate__fadeIn'
+        >
 			<Stack
+            
 				spacing={3}
 				sx={{
 					height: 'calc(100vh - 54px)',

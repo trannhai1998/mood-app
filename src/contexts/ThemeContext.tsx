@@ -16,7 +16,7 @@ export const ThemeWrapperProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
 	const SYSTEM_THEME = useMediaQuery('(prefers-color-scheme: dark)');
 	const [themeMode, setThemeMode] = useState<IThemeMode>(
-		SYSTEM_THEME ? IThemeMode.DARK : IThemeMode.LIGHT,
+		SYSTEM_THEME ? IThemeMode.LIGHT : IThemeMode.DARK,
 	);
 	const [theme, setTheme] = useState<Theme>(appLightTheme);
 
