@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 const Login = () => {
 	const navigate = useNavigate();
 	const [error, setError] = useState('');
+	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -22,9 +23,11 @@ const Login = () => {
 	return (
 		<Auth
 			submitLabel="Login"
+			isLoading={loading}
 			onSubmit={async (request) => {
 				// login(request);
 				try {
+					setLoading(true);
 					const user = await signInWithEmailAndPassword(
 						auth,
 						request.email,
@@ -38,8 +41,9 @@ const Login = () => {
 					console.log(user);
 				} catch (error) {
 					setError('Email or password is in valid!');
-
 					console.log(error);
+				} finally {
+					setLoading(false);
 				}
 			}}
 			error={error}>

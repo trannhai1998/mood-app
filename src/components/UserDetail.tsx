@@ -25,6 +25,7 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { useAuth } from './auth/AuthProvider';
 import { User } from 'firebase/auth';
 import { IFriendUserContext, useFriendUser } from 'contexts/FriendUserContext';
+import MessageIcon from '@mui/icons-material/Message';
 
 const UserDetail = () => {
 	const { userId } = useParams(); // Nhận userId từ URL
@@ -34,6 +35,7 @@ const UserDetail = () => {
 	const [userDetail, setUserDetail] = useState<any>(null);
 	const [loadingUser, setLoadingUser] = useState(true);
 	const { userFriends } = useFriendUser() as IFriendUserContext;
+	const [isYourFriend, setIsYourFriend] = useState(false);
 
 	const fetchUserPosts = async () => {
 		setLoading(true);
@@ -45,7 +47,6 @@ const UserDetail = () => {
 				id: doc.id,
 				...doc.data(),
 			}));
-			console.log(postsList);
 			setPosts(postsList as IPost[]);
 		} catch (error) {
 			console.error('Error fetching posts: ', error);
@@ -63,9 +64,9 @@ const UserDetail = () => {
 			}
 			const userDocRef = doc(db, 'users', userId); // Thay 'users' bằng tên collection của bạn
 			const userDoc = await getDoc(userDocRef);
-			console.log(userDoc.data());
 			const infoUser = userDoc.data();
 			setUserDetail(infoUser);
+			setIsYourFriend(!!userFriends?.find((e) => e.id === userId));
 		} catch (error) {
 		} finally {
 			setLoadingUser(false);
@@ -120,14 +121,24 @@ const UserDetail = () => {
 							sx={{
 								marginLeft: 'auto !important',
 							}}>
-							{currentUser?.uid !== userId &&
-							!userFriends?.includes(userId) ? (
+							{currentUser?.uid !== userId && !isYourFriend ? (
 								<Tooltip title="Add Friend">
 									<IconButton color="primary">
 										<PersonAddIcon
 											sx={{
 												fontSize: '28px',
 											}}></PersonAddIcon>
+									</IconButton>
+								</Tooltip>
+							) : null}
+
+							{isYourFriend ? (
+								<Tooltip title="Send message">
+									<IconButton color="primary">
+										<MessageIcon
+											sx={{
+												fontSize: '28px',
+											}}></MessageIcon>
 									</IconButton>
 								</Tooltip>
 							) : null}

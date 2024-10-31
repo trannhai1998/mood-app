@@ -16,7 +16,6 @@ import {
 	getDoc,
 	getDocs,
 	limit,
-	orderBy,
 	query,
 	where,
 } from 'firebase/firestore';
@@ -112,7 +111,7 @@ const RecommendFriends = () => {
 								</Typography>
 
 								<Tooltip
-									title="Send a message"
+									title="Add friend"
 									sx={{ marginLeft: 'auto' }}>
 									<IconButton
 										color="primary"

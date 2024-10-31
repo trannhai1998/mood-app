@@ -33,6 +33,7 @@ const ListFriends = () => {
 	const { user } = useAuth() as { user: User };
 	const { userFriends, fetchUserFriends } =
 		useFriendUser() as IFriendUserContext;
+
 	const handleRedirectDetailUser = (userId) => {
 		navigate(`/feed/user/${userId}`);
 	};
@@ -73,7 +74,7 @@ const ListFriends = () => {
 								</Typography>
 
 								<Tooltip
-									title="Add Friend"
+									title="Send message"
 									sx={{ marginLeft: 'auto' }}>
 									<IconButton color="primary">
 										<MessageIcon

@@ -13,6 +13,7 @@ import { doc, setDoc } from 'firebase/firestore';
 
 const SignUp = () => {
 	const [error, setError] = useState('');
+	const [loading, setLoading] = useState(false);
 
 	const navigate = useNavigate();
 
@@ -30,9 +31,12 @@ const SignUp = () => {
 		<Auth
 			submitLabel="Sign Up"
 			isSignUp={true}
+			isLoading={loading}
 			onSubmit={async ({ email, password, firstName, lastName }) => {
 				try {
+
 					setError('');
+					setLoading(true);
 					const userCredential = await createUserWithEmailAndPassword(
 						auth,
 						email,
@@ -46,7 +50,7 @@ const SignUp = () => {
 					});
 
 					await setDoc(doc(db, 'users', user.uid), {
-                        id: user.uid,
+						id: user.uid,
 						email: user.email,
 						displayName: user.displayName,
 						firstName: firstName,
@@ -54,11 +58,12 @@ const SignUp = () => {
 						photoURL: user.photoURL,
 						createdAt: new Date(),
 					});
-					console.log(user);
 				} catch (error) {
 					setError(
 						`The email or password (must contain at least 6 characters) is not valid.`,
 					);
+				} finally {
+					setLoading(false);
 				}
 			}}
 			error={error}>

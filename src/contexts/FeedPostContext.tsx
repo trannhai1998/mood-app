@@ -1,9 +1,18 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { collection, query, where, orderBy, getDocs, limit} from 'firebase/firestore';
+import {
+	collection,
+	query,
+	where,
+	orderBy,
+	getDocs,
+	limit,
+} from 'firebase/firestore';
 import { db } from 'configs/firebase.config';
 import { useAuth } from 'components/auth/AuthProvider';
 import { User } from 'firebase/auth';
 import { IPost } from 'components/post/Post';
+import { fetchPostByUser, fetchUserData } from 'utils/fuctions';
+import _ from 'lodash';
 
 export interface IPostContext {
 	posts: IPost[];
@@ -28,26 +37,43 @@ export const PostProvider = ({ children }) => {
 	const fetchPosts = async () => {
 		setLoading(true);
 		try {
-			const postsRef = collection(db, 'posts');
-			const q = query(
-				postsRef,
-				where('userId', '==', user.uid),
-                
+			const postsList = await fetchPostByUser(user.uid, [
 				orderBy('createdDate', 'desc'),
-                limit(limitNumb)
+				limit(limitNumb),
+			]);
+			const currentUser = await fetchUserData(user.uid);
+			console.log(currentUser);
+
+			let postsFriendUser: any[] = [];
+			if (currentUser?.friends?.length) {
+				const postsByUserPromises = currentUser.friends?.map((e) => {
+					console.log(e);
+					return fetchPostByUser(e, [
+						orderBy('createdDate', 'desc'),
+						limit(2),
+					]);
+				});
+				const PostsListByFriends = await Promise.all(
+					postsByUserPromises,
+				);
+				postsFriendUser = _.flatMap(PostsListByFriends);
+				console.log(PostsListByFriends);
+			}
+
+			const combinePostList = _.orderBy(
+				_.concat(postsList, postsFriendUser),
+				(e) => e?.createdDate,
+				'desc',
 			);
-			const querySnapshot = await getDocs(q);
-			const postsList = querySnapshot.docs.map((doc) => ({
-				id: doc.id,
-				...doc.data(),
-			}));
-			setPosts(postsList);
+
+			setPosts(combinePostList);
 		} catch (error) {
 			setError(error);
 		} finally {
 			setLoading(false);
 		}
 	};
+
 	useEffect(() => {
 		if (!user) return; // Chờ đến khi user được xác thực
 

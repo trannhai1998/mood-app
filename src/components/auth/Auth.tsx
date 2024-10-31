@@ -1,4 +1,5 @@
 import { Box, Button, Stack, TextField, Typography } from '@mui/material';
+import Loader from 'components/Loader';
 import { Logo } from 'components/Logo';
 import TextAnimation from 'components/TextAnimation';
 import React, { useState } from 'react';
@@ -14,6 +15,7 @@ type AuthProps = {
 	children: React.ReactNode;
 	error?: string;
 	isSignUp?: boolean;
+	isLoading?: boolean;
 };
 
 const textArray = [
@@ -33,6 +35,7 @@ const Auth = ({
 	children,
 	error,
 	isSignUp = false,
+	isLoading = false,
 }: AuthProps) => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
@@ -45,6 +48,11 @@ const Auth = ({
 	});
 
 	const handleSubmit = (event, email: string, password: string) => {
+		event.preventDefault();
+        if (!!isLoading) {
+            return;
+        }
+
 		if (isSignUp) {
 			if (!firstName || !lastName) {
 				setErrorName({
@@ -63,14 +71,12 @@ const Auth = ({
 		}
 
 		onSubmit({ email, password, firstName, lastName });
-		event.preventDefault();
 	};
 	return (
-		<form onSubmit={(event) => handleSubmit(event, email, password)}
-            className='animate__animated animate__fadeIn'
-        >
+		<form
+			onSubmit={(event) => handleSubmit(event, email, password)}
+			className="animate__animated animate__fadeIn">
 			<Stack
-            
 				spacing={3}
 				sx={{
 					height: 'calc(100vh - 54px)',
@@ -141,10 +147,15 @@ const Auth = ({
 				<Button
 					variant="contained"
 					type="submit"
+					disabled={isLoading}
 					onClick={(event) => handleSubmit(event, email, password)}>
-					<Typography variant="h5" className="font-cute">
-						{submitLabel}
-					</Typography>
+					{!isLoading ? (
+						<Typography variant="h5" className="font-cute">
+							{submitLabel}
+						</Typography>
+					) : (
+						<Loader></Loader>
+					)}
 				</Button>
 
 				{children}
